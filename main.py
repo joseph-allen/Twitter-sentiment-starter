@@ -15,10 +15,15 @@ class StdOutListener(StreamListener):
     def on_error(self, status):
         print(status)
 
-if __name__ == '__main__':
-    l = StdOutListener()
+def setup_auth():
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
+    
+    return auth
+
+if __name__ == '__main__':
+    l = StdOutListener()
+    auth = setup_auth()
 
     stream = Stream(auth, l)
     stream.filter(track=['basketball'])
