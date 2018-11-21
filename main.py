@@ -3,13 +3,17 @@ from auth import consumer_key,consumer_secret,access_token, access_token_secret
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
+import json
 
 class StdOutListener(StreamListener):
     """ A listener handles tweets that are received from the stream.
     This is a basic listener that just prints received tweets to stdout.
     """
     def on_data(self, data):
-        print(data)
+        obj = json.loads(data)
+        # Write Sentiment
+        print(obj['text'])
+        # Tweet out response
         return True
 
     def on_error(self, status):
