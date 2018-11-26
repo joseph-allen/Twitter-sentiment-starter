@@ -17,8 +17,15 @@ Once this is done you can select "Keys and Tokens" to get your:
 at the root of this project create a file called `auth.json` and populate is as follows:
 
 ```
-consumer_token="YOUR_API_KEY"
+consumer_key="YOUR_API_KEY"
 consumer_secret="YOUR_SECRET_API_KEY"
 access_token="YOUR_ACCESS_TOKEN"
-access_secret="YOUR_SECRET_ACCESS_TOKEN"
+access_token_secret="YOUR_SECRET_ACCESS_TOKEN"
+```
+
+# Sentiment Analysis
+Run a Python terminal, then run the following:
+```
+ >>> import nltk
+>>> nltk.download('vader_lexicon')
 ```
