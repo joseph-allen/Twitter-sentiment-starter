@@ -1,2 +1,4 @@
 auth.py*
+endpoints.py*
+.ipynb_checkpoints/
 __pycache__*

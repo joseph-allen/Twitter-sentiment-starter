@@ -1,9 +1,11 @@
 from __future__ import absolute_import, print_function
 from auth import consumer_key,consumer_secret,access_token, access_token_secret
+from endpoints import good, bad
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import tweepy
+import urllib.request
 # sentiment analysis
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import json
@@ -16,28 +18,20 @@ class StdOutListener(StreamListener):
     def on_data(self, data):
         obj = json.loads(data)
         text = obj['text']
-        api = tweepy.API(auth)
 
         # Calculate Sentiment
-
-        # Command Line logs
-        pos = 'pos: ' + str(get_polarity('pos',text))
-        neg = 'neg: ' + str(get_polarity('neg',text))
-        neu = 'neu: ' + str(get_polarity('neu',text))
-        compound = 'compound: ' + str(get_polarity('compound',text))
+        compound = get_polarity('compound',text)
         
-        print("Tweeting... " + text)
-        # print(pos)
-        # print (neg)
-        # print (neu)
-        # print (compound)
+        print("Recieved Tweet: " + text)
 
-        # Tweet Test
-        toTweet = text + '\n' + pos + '\n' +neg + '\n' + neu + '\n' + compound + '\n'
-        print('toTweet' + toTweet)
-
-        # Tweet out response
-        api.update_status(toTweet)
+        # send a http req to our endpoint
+        print('Compound Score : ' + str(compound))
+        if(compound > 0):
+            print('NURTURE')
+            urllib.request.urlopen(good).read()
+        if(compound < 0):
+            print('DESTROY')
+            urllib.request.urlopen(bad).read()
 
         return True
 
@@ -61,5 +55,6 @@ if __name__ == '__main__':
     sid = SentimentIntensityAnalyzer()
 
     stream = Stream(auth, l)
+
     # filter for tweets at a particular user only, in this case realdonaldtrump
     stream.filter(track=['@realdonaldTrump'])

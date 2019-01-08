@@ -29,3 +29,13 @@ Run a Python terminal, then run the following:
  >>> import nltk
 >>> nltk.download('vader_lexicon')
 ```
+
+# Hitting an endpoint
+for hitting an endpoint dependent on sentiment
+
+create a file called `endpoints.py`
+
+```
+bad="google.com/bad"
+good="google.com/good"
+```
